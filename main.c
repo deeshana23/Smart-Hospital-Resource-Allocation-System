@@ -75,6 +75,36 @@ void getPatientInput(int index)
     }
 }
 
+void assignBed(int index)
+{
+    int ward;
+    int bed;
+
+    if (patientWard[index] == 0)
+    {
+        return;
+    }
+
+    ward = patientWard[index] - 1;
+
+    for (bed = 0; bed < wardCapacities[ward]; bed++)
+    {
+        if (bedOccupancy[ward][bed] == 0)
+        {
+            bedOccupancy[ward][bed] = 1;
+
+            printf("Bed allocated: %s - Bed %d\n",
+                   wardNames[ward], bed + 1);
+
+            return;
+        }
+    }
+
+    printf("No available bed in %s.\n", wardNames[ward]);
+    patientWard[index] = 0;
+    patientDays[index] = 0;
+}
+
 int main()
 {
     printf("Smart Hospital Resource Allocation System\n");
