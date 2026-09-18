@@ -30,6 +30,8 @@ const int wardCapacities[WARD_COUNT] = { 20, 10, 10, 5};
 
 int bedOccupancy[WARD_COUNT][20] = {0};
 
+int specialtyQueueCount[SPECIALTY_COUNT] = {0};
+
 #define MAX_PATIENTS 100
 
 int patientID[MAX_PATIENTS];
@@ -103,6 +105,15 @@ void assignBed(int index)
     printf("No available bed in %s.\n", wardNames[ward]);
     patientWard[index] = 0;
     patientDays[index] = 0;
+}
+
+int calculateWaitingTime(int index)
+{
+    int specialty;
+
+    specialty = patientSpecialty[index] - 1;
+
+    return specialtyQueueCount[specialty] * specialtyTimes[specialty];
 }
 
 int main()
