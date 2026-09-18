@@ -405,6 +405,36 @@ void showRevenueReport()
     printf("Total Discounts : Rs. %.2f\n", totalDiscounts);
 }
 
+void showBedOccupancyReport()
+{
+    int ward;
+    int bed;
+    int occupiedBeds;
+    double occupancyPercentage;
+
+    printf("\n===== BED OCCUPANCY REPORT =====\n");
+
+    for (ward = 0; ward < WARD_COUNT; ward++)
+    {
+        occupiedBeds = 0;
+
+        for (bed = 0; bed < wardCapacities[ward]; bed++)
+        {
+            if (bedOccupancy[ward][bed] == 1)
+            {
+                occupiedBeds++;
+            }
+        }
+
+        occupancyPercentage = (occupiedBeds * 100.0) / wardCapacities[ward];
+
+        printf("\n%s\n", wardNames[ward]);
+        printf("Occupied Beds : %d\n", occupiedBeds);
+        printf("Capacity      : %d\n", wardCapacities[ward]);
+        printf("Occupancy     : %.2f%%\n", occupancyPercentage);
+    }
+}
+
 int main()
 {
     int choice;
@@ -416,7 +446,8 @@ int main()
         printf("2. View Patients by Priority\n");
         printf("3. Urgency Report\n");
         printf("4. Revenue Report\n");
-        printf("5. Exit\n");
+        printf("5. Bed Occupancy Report\n");
+        printf("6. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -443,6 +474,11 @@ int main()
         }
 
         else if  (choice == 5)
+        {
+           showBedOccupancyReport();
+        }
+
+        else if  (choice == 6)
         {
             printf("Thank you.\n");
             break;
