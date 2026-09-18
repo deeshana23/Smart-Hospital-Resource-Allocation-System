@@ -435,6 +435,35 @@ void showBedOccupancyReport()
     }
 }
 
+void showHighestPayingPatient()
+{
+    int i;
+    int highestIndex;
+    double highestBill;
+
+    if (patientCount == 0)
+    {
+        printf("\nNo patients registered.\n");
+        return;
+    }
+
+    highestIndex = 0;
+    highestBill = patientBill[0];
+
+    for (i = 1; i < patientCount; i++)
+    {
+        if (patientBill[i] > highestBill)
+        {
+            highestBill = patientBill[i];
+            highestIndex = i;
+        }
+    }
+
+    printf("\n===== HIGHEST PAYING PATIENT =====\n");
+    printf("Patient Name : %s\n", patientName[highestIndex]);
+    printf("Patient Bill : Rs. %.2f\n", patientBill[highestIndex]);
+}
+
 int main()
 {
     int choice;
@@ -447,7 +476,8 @@ int main()
         printf("3. Urgency Report\n");
         printf("4. Revenue Report\n");
         printf("5. Bed Occupancy Report\n");
-        printf("6. Exit\n");
+        printf("6. Highest-Paying Patient\n");
+        printf("7. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -478,11 +508,17 @@ int main()
            showBedOccupancyReport();
         }
 
-        else if  (choice == 6)
+         else if  (choice == 6)
+        {
+          showHighestPayingPatient();
+        }
+
+        else if  (choice == 7)
         {
             printf("Thank you.\n");
             break;
         }
+
         else
         {
             printf("Invalid choice.\n");
