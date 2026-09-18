@@ -116,6 +116,28 @@ int calculateWaitingTime(int index)
     return specialtyQueueCount[specialty] * specialtyTimes[specialty];
 }
 
+double calculateSurcharge(int index)
+{
+    int specialty;
+    double baseFee;
+
+    specialty = patientSpecialty[index] - 1;
+    baseFee = specialtyFees[specialty];
+
+    if (patientUrgency[index] == 2)
+    {
+        return baseFee * 0.20;
+    }
+    else if (patientUrgency[index] == 3)
+    {
+        return baseFee * 0.50;
+    }
+    else
+    {
+        return 0.0;
+    }
+}
+
 int main()
 {
     printf("Smart Hospital Resource Allocation System\n");
