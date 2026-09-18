@@ -50,31 +50,93 @@ void getPatientInput(int index)
     printf("\nEnter patient name: ");
     scanf(" %[^\n]", patientName[index]);
 
-    printf("Enter age: ");
-    scanf("%d", &patientAge[index]);
-
-    printf("Enter urgency (1-Normal, 2-Urgent, 3-Critical): ");
-    scanf("%d", &patientUrgency[index]);
-
-    printf("Enter specialty (1-General, 2-Paediatrics, 3-Cardiology, 4-Neurology): ");
-    scanf("%d", &patientSpecialty[index]);
-
-    printf("Is the patient admitted? (1-Yes, 0-No): ");
-    scanf("%d", &patientWard[index]);
-
-    if (patientWard[index] == 1)
+    do
     {
-        printf("Enter ward (1-General, 2-Paediatric, 3-Surgical, 4-ICU): ");
+
+       printf("Enter age: ");
+       scanf("%d", &patientAge[index]);
+
+
+       if (patientAge[index] < 0)
+
+       {
+         printf("Invalid age. Please enter a valid age.\n");
+       }
+
+    } while (patientAge[index] < 0);
+
+    do
+    {
+
+       printf("Enter urgency (1-Normal, 2-Urgent, 3-Critical): ");
+       scanf("%d", &patientUrgency[index]);
+
+        if (patientUrgency[index] < 1 || patientUrgency[index] > 3)
+        {
+            printf("Invalid urgency. Please enter 1-3.\n");
+        }
+
+    } while (patientUrgency[index] < 1 || patientUrgency[index] > 3);
+
+    do
+    {
+
+       printf("Enter specialty (1-General, 2-Paediatrics, 3-Cardiology, 4-Neurology): ");
+       scanf("%d", &patientSpecialty[index]);
+
+       if (patientSpecialty[index] < 1 || patientSpecialty[index] > 4)
+        {
+            printf("Invalid specialty. Please enter 1-4.\n");
+        }
+
+    } while (patientSpecialty[index] < 1 || patientSpecialty[index] > 4);
+
+    do
+    {
+
+        printf("Is the patient admitted? (1-Yes, 0-No): ");
         scanf("%d", &patientWard[index]);
 
-        printf("Enter number of days: ");
-        scanf("%d", &patientDays[index]);
+        if (patientWard[index] != 0 && patientWard[index] != 1)
+        {
+            printf("Invalid choice. Please enter 1 or 0.\n");
+        }
+
+    } while (patientWard[index] != 0 && patientWard[index] != 1);
+
+       if (patientWard[index] == 1)
+    {
+        do
+        {
+            printf("Enter ward (1-General, 2-Paediatric, 3-Surgical, 4-ICU): ");
+            scanf("%d", &patientWard[index]);
+
+            if (patientWard[index] < 1 || patientWard[index] > 4)
+            {
+                printf("Invalid ward. Please enter 1-4.\n");
+            }
+
+        } while (patientWard[index] < 1 || patientWard[index] > 4);
+
+
+        do
+        {
+            printf("Enter number of days: ");
+            scanf("%d", &patientDays[index]);
+
+            if (patientDays[index] <= 0)
+            {
+                printf("Invalid number of days. Please enter a positive number.\n");
+            }
+
+        } while (patientDays[index] <= 0);
     }
     else
     {
         patientWard[index] = 0;
         patientDays[index] = 0;
     }
+
 }
 
 void assignBed(int index)
@@ -229,8 +291,86 @@ void printReceipt(int index)
     printf("=====================================\n");
 }
 
+void registerPatient()
+{
+    int index;
+
+    index = patientCount;
+
+    patientID[index] = patientCount + 1;
+
+    getPatientInput(index);
+
+    assignBed(index);
+
+    patientBill[index] = calculateBill(index);
+
+    printReceipt(index);
+
+    specialtyQueueCount[patientSpecialty[index] - 1]++;
+
+    patientCount++;
+}
+
+void displayPatientsByPriority()
+{
+    int priority;
+    int i;
+
+    printf("\nPatients by Priority\n");
+
+    for (priority = 3; priority >= 1; priority--)
+    {
+        for (i = 0; i < patientCount; i++)
+        {
+            if (patientUrgency[i] == priority)
+            {
+                printf("\nPatient ID: %d\n", patientID[i]);
+                printf("Patient Name: %s\n", patientName[i]);
+
+                if (priority == 3)
+                {
+                    printf("Urgency: Critical\n");
+                }
+                else if (priority == 2)
+                {
+                    printf("Urgency: Urgent\n");
+                }
+                else
+                {
+                    printf("Urgency: Normal\n");
+                }
+            }
+        }
+    }
+}
+
 int main()
 {
+    int choice;
     printf("Smart Hospital Resource Allocation System\n");
+
+     while (1)
+    {
+        printf("\n1. Register Patient\n");
+        printf("2. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 1)
+        {
+            registerPatient();
+        }
+        else if (choice == 2)
+        {
+            printf("Thank you.\n");
+            break;
+        }
+        else
+        {
+            printf("Invalid choice.\n");
+        }
+    }
+
     return 0;
 }
