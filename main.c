@@ -185,6 +185,50 @@ double calculateBill(int index)
     return finalAmount;
 }
 
+void printReceipt(int index)
+{
+    int specialty;
+
+    specialty = patientSpecialty[index] - 1;
+
+    printf("\n========== PATIENT RECEIPT ==========\n");
+    printf("Patient ID       : %d\n", patientID[index]);
+    printf("Patient Name     : %s\n", patientName[index]);
+    printf("Age              : %d\n", patientAge[index]);
+    printf("Specialty        : %s\n", specialtyNames[specialty]);
+
+    printf("Urgency          : ");
+
+    if (patientUrgency[index] == 1)
+    {
+        printf("Normal\n");
+    }
+    else if (patientUrgency[index] == 2)
+    {
+        printf("Urgent\n");
+    }
+    else
+    {
+        printf("Critical\n");
+    }
+
+    printf("Waiting Time : %d minutes\n", calculateWaitingTime(index));
+
+    if (patientWard[index] != 0)
+    {
+        printf("Ward  : %s\n",
+               wardNames[patientWard[index] - 1]);
+        printf("Number of Days   : %d\n", patientDays[index]);
+    }
+    else
+    {
+        printf("Admission  : Outpatient\n");
+    }
+
+    printf("Final Bill   : Rs. %.2f\n", patientBill[index]);
+    printf("=====================================\n");
+}
+
 int main()
 {
     printf("Smart Hospital Resource Allocation System\n");
