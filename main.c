@@ -345,6 +345,35 @@ void displayPatientsByPriority()
     }
 }
 
+void showUrgencyReport()
+{
+    int normalCount = 0;
+    int urgentCount = 0;
+    int criticalCount = 0;
+    int i;
+
+    for (i = 0; i < patientCount; i++)
+    {
+        if (patientUrgency[i] == 1)
+        {
+            normalCount++;
+        }
+        else if (patientUrgency[i] == 2)
+        {
+            urgentCount++;
+        }
+        else if (patientUrgency[i] == 3)
+        {
+            criticalCount++;
+        }
+    }
+
+    printf("\n===== URGENCY REPORT =====\n");
+    printf("Normal Patients   : %d\n", normalCount);
+    printf("Urgent Patients   : %d\n", urgentCount);
+    printf("Critical Patients : %d\n", criticalCount);
+}
+
 int main()
 {
     int choice;
@@ -354,7 +383,8 @@ int main()
     {
         printf("\n1. Register Patient\n");
         printf("2. View Patients by Priority\n");
-        printf("3. Exit\n");
+        printf("3. Urgency Report\n");
+        printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -363,11 +393,18 @@ int main()
             registerPatient();
         }
 
-        else if (choice == 2)
+
+         else if (choice == 2)
         {
             displayPatientsByPriority();
         }
-        else if  (choice == 3)
+
+         else if (choice == 3)
+        {
+           showUrgencyReport();
+        }
+
+        else if  (choice == 4)
         {
             printf("Thank you.\n");
             break;
