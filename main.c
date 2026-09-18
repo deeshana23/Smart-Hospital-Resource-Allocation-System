@@ -15,6 +15,18 @@ const int specialtyTimes[SPECIALTY_COUNT] = {15, 20, 30, 30};
 
 const int specialtyDailyCaps[SPECIALTY_COUNT] = { 30, 20, 12, 10};
 
+#define WARD_COUNT 4
+
+const char *wardNames[WARD_COUNT] = {
+    "General Ward",
+    "Paediatric Ward",
+    "Surgical Ward",
+    "ICU"
+};
+
+const int wardDailyRates[WARD_COUNT] = { 3000, 6000, 12000, 25000};
+
+const int wardCapacities[WARD_COUNT] = { 20, 10, 10, 5};
 
 int main()
 {
