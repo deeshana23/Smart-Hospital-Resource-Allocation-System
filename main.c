@@ -41,6 +41,7 @@ int patientUrgency[MAX_PATIENTS];
 int patientSpecialty[MAX_PATIENTS];
 int patientWard[MAX_PATIENTS];
 int patientDays[MAX_PATIENTS];
+int patientBed [MAX_PATIENTS];
 double patientBill[MAX_PATIENTS];
 
 int patientCount = 0;
@@ -146,6 +147,7 @@ void assignBed(int index)
 
     if (patientWard[index] == 0)
     {
+        patientBed[index]=0;
         return;
     }
 
@@ -156,9 +158,10 @@ void assignBed(int index)
         if (bedOccupancy[ward][bed] == 0)
         {
             bedOccupancy[ward][bed] = 1;
+            patientBed [index]=bed+1;
 
             printf("Bed allocated: %s - Bed %d\n",
-                   wardNames[ward], bed + 1);
+                   wardNames[ward], patientBed  [index] );
 
             return;
         }
@@ -279,7 +282,10 @@ void printReceipt(int index)
     if (patientWard[index] != 0)
     {
         printf("Ward  : %s\n",
-               wardNames[patientWard[index] - 1]);
+
+            wardNames[patientWard[index] - 1]);
+
+        printf("Bed Number  : %d\n", patientDays[index]);
         printf("Number of Days   : %d\n", patientDays[index]);
     }
     else
