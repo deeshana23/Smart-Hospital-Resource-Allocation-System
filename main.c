@@ -28,6 +28,8 @@ const int wardDailyRates[WARD_COUNT] = { 3000, 6000, 12000, 25000};
 
 const int wardCapacities[WARD_COUNT] = { 20, 10, 10, 5};
 
+int bedOccupancy[WARD_COUNT][20] = {0};
+
 int main()
 {
     printf("Smart Hospital Resource Allocation System\n");
