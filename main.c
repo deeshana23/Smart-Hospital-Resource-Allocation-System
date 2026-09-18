@@ -43,6 +43,38 @@ double patientBill[MAX_PATIENTS];
 
 int patientCount = 0;
 
+void getPatientInput(int index)
+{
+    printf("\nEnter patient name: ");
+    scanf(" %[^\n]", patientName[index]);
+
+    printf("Enter age: ");
+    scanf("%d", &patientAge[index]);
+
+    printf("Enter urgency (1-Normal, 2-Urgent, 3-Critical): ");
+    scanf("%d", &patientUrgency[index]);
+
+    printf("Enter specialty (1-General, 2-Paediatrics, 3-Cardiology, 4-Neurology): ");
+    scanf("%d", &patientSpecialty[index]);
+
+    printf("Is the patient admitted? (1-Yes, 0-No): ");
+    scanf("%d", &patientWard[index]);
+
+    if (patientWard[index] == 1)
+    {
+        printf("Enter ward (1-General, 2-Paediatric, 3-Surgical, 4-ICU): ");
+        scanf("%d", &patientWard[index]);
+
+        printf("Enter number of days: ");
+        scanf("%d", &patientDays[index]);
+    }
+    else
+    {
+        patientWard[index] = 0;
+        patientDays[index] = 0;
+    }
+}
+
 int main()
 {
     printf("Smart Hospital Resource Allocation System\n");
