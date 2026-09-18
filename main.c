@@ -150,6 +150,41 @@ double calculateSubsidy(int index, double grossAmount)
     }
 }
 
+double calculateBill(int index)
+{
+    int specialty;
+    double baseFee;
+    double surcharge;
+    double wardCost;
+    double grossAmount;
+    double subsidy;
+    double finalAmount;
+
+    specialty = patientSpecialty[index] - 1;
+
+    baseFee = specialtyFees[specialty];
+    surcharge = calculateSurcharge(index);
+
+    if (patientWard[index] != 0)
+    {
+        wardCost = patientDays[index] * wardDailyRates[patientWard[index] - 1];
+    }
+    else
+    {
+        wardCost = 0.0;
+    }
+
+    grossAmount = baseFee + surcharge + wardCost;
+
+    subsidy = calculateSubsidy(index, grossAmount);
+
+    finalAmount = grossAmount - subsidy;
+
+    patientBill[index] = finalAmount;
+
+    return finalAmount;
+}
+
 int main()
 {
     printf("Smart Hospital Resource Allocation System\n");
