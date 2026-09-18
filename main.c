@@ -30,6 +30,19 @@ const int wardCapacities[WARD_COUNT] = { 20, 10, 10, 5};
 
 int bedOccupancy[WARD_COUNT][20] = {0};
 
+#define MAX_PATIENTS 100
+
+int patientID[MAX_PATIENTS];
+char patientName[MAX_PATIENTS][50];
+int patientAge[MAX_PATIENTS];
+int patientUrgency[MAX_PATIENTS];
+int patientSpecialty[MAX_PATIENTS];
+int patientWard[MAX_PATIENTS];
+int patientDays[MAX_PATIENTS];
+double patientBill[MAX_PATIENTS];
+
+int patientCount = 0;
+
 int main()
 {
     printf("Smart Hospital Resource Allocation System\n");
