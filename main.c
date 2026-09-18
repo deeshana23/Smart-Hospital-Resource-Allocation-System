@@ -138,6 +138,18 @@ double calculateSurcharge(int index)
     }
 }
 
+double calculateSubsidy(int index, double grossAmount)
+{
+    if (patientAge[index] < 5 || patientAge[index] > 65)
+    {
+        return grossAmount * 0.15;
+    }
+    else
+    {
+        return 0.0;
+    }
+}
+
 int main()
 {
     printf("Smart Hospital Resource Allocation System\n");
