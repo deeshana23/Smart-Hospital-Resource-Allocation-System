@@ -374,6 +374,37 @@ void showUrgencyReport()
     printf("Critical Patients : %d\n", criticalCount);
 }
 
+void showRevenueReport()
+{
+    double totalRevenue = 0.0;
+    double totalDiscounts = 0.0;
+    int i;
+
+    for (i = 0; i < patientCount; i++)
+    {
+        double grossAmount;
+        double discount;
+
+        grossAmount = patientBill[i];
+
+        if (patientAge[i] < 5 || patientAge[i] > 65)
+        {
+            discount = grossAmount * 0.15;
+        }
+        else
+        {
+            discount = 0.0;
+        }
+
+        totalRevenue = totalRevenue + patientBill[i];
+        totalDiscounts = totalDiscounts + discount;
+    }
+
+    printf("\n===== REVENUE REPORT =====\n");
+    printf("Total Revenue   : Rs. %.2f\n", totalRevenue);
+    printf("Total Discounts : Rs. %.2f\n", totalDiscounts);
+}
+
 int main()
 {
     int choice;
@@ -384,7 +415,8 @@ int main()
         printf("\n1. Register Patient\n");
         printf("2. View Patients by Priority\n");
         printf("3. Urgency Report\n");
-        printf("4. Exit\n");
+        printf("4. Revenue Report\n");
+        printf("5. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -405,6 +437,12 @@ int main()
         }
 
         else if  (choice == 4)
+        {
+            showRevenueReport();
+
+        }
+
+        else if  (choice == 5)
         {
             printf("Thank you.\n");
             break;
