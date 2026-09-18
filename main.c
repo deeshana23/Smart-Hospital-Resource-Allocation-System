@@ -353,7 +353,8 @@ int main()
      while (1)
     {
         printf("\n1. Register Patient\n");
-        printf("2. Exit\n");
+        printf("2. View Patients by Priority\n");
+        printf("3. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -361,7 +362,12 @@ int main()
         {
             registerPatient();
         }
+
         else if (choice == 2)
+        {
+            displayPatientsByPriority();
+        }
+        else if  (choice == 3)
         {
             printf("Thank you.\n");
             break;
