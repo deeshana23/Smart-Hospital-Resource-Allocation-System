@@ -40,10 +40,11 @@ int patientAge[MAX_PATIENTS];
 int patientUrgency[MAX_PATIENTS];
 int patientSpecialty[MAX_PATIENTS];
 int patientWard[MAX_PATIENTS];
+int patientAdmitted[MAX_PATIENTS];
 int patientDays[MAX_PATIENTS];
 int patientBed [MAX_PATIENTS];
 double patientBill[MAX_PATIENTS];
-
+double patientDiscount[MAX_PATIENTS];
 int patientCount = 0;
 
 void saveBedStatus();
@@ -97,19 +98,18 @@ void getPatientInput(int index)
     } while (patientSpecialty[index] < 1 || patientSpecialty[index] > 4);
 
     do
+{
+    printf("Is the patient admitted? (1-Yes, 0-No): ");
+    scanf("%d", &patientAdmitted[index]);
+
+    if (patientAdmitted[index] != 0 && patientAdmitted[index] != 1)
     {
+        printf("Invalid choice. Please enter 1 or 0.\n");
+    }
 
-        printf("Is the patient admitted? (1-Yes, 0-No): ");
-        scanf("%d", &patientWard[index]);
+} while (patientAdmitted[index] != 0 && patientAdmitted[index] != 1);
 
-        if (patientWard[index] != 0 && patientWard[index] != 1)
-        {
-            printf("Invalid choice. Please enter 1 or 0.\n");
-        }
-
-    } while (patientWard[index] != 0 && patientWard[index] != 1);
-
-       if (patientWard[index] == 1)
+       if (patientAdmitted[index] == 1)
     {
         do
         {
@@ -149,7 +149,7 @@ void assignBed(int index)
     int ward;
     int bed;
 
-    if (patientWard[index] == 0)
+    if (patientAdmitted[index] == 0)
     {
         patientBed[index]=0;
         return;
@@ -248,6 +248,8 @@ double calculateBill(int index)
     grossAmount = baseFee + surcharge + wardCost;
 
     subsidy = calculateSubsidy(index, grossAmount);
+
+    patientDiscount[index] = subsidy;
 
     finalAmount = grossAmount - subsidy;
 
@@ -413,7 +415,7 @@ void showRevenueReport()
         }
 
         totalRevenue = totalRevenue + patientBill[i];
-        totalDiscounts = totalDiscounts + discount;
+        totalDiscounts = totalDiscounts + patientDiscount[i];
     }
 
     printf("\n===== REVENUE REPORT =====\n");
