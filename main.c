@@ -261,8 +261,26 @@ double calculateBill(int index)
 void printReceipt(int index)
 {
     int specialty;
+    double baseFee;
+    double surcharge;
+    double wardCost;
+    double grossAmount;
 
     specialty = patientSpecialty[index] - 1;
+
+    baseFee = specialtyFees[specialty];
+    surcharge = calculateSurcharge(index);
+
+    if (patientWard[index] != 0)
+    {
+        wardCost = patientDays[index] * wardDailyRates[patientWard[index] - 1];
+    }
+    else
+    {
+        wardCost = 0.0;
+    }
+
+    grossAmount = baseFee + surcharge + wardCost;
 
     printf("\n========== PATIENT RECEIPT ==========\n");
     printf("Patient ID       : %d\n", patientID[index]);
@@ -301,6 +319,13 @@ void printReceipt(int index)
         printf("Admission  : Outpatient\n");
     }
 
+    printf("Base Fee         : Rs. %.2f\n", baseFee);
+    printf("Surcharge        : Rs. %.2f\n", surcharge);
+    printf("Ward Cost        : Rs. %.2f\n", wardCost);
+    printf("Gross Amount     : Rs. %.2f\n", grossAmount);
+    printf("Subsidy          : Rs. %.2f\n", patientDiscount[index]);
+    printf("Final Bill       : Rs. %.2f\n", patientBill[index]);
+    printf("=====================================\n");
     printf("Final Bill   : Rs. %.2f\n", patientBill[index]);
     printf("=====================================\n");
 }
