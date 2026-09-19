@@ -1,0 +1,10 @@
+Patient ID: 1
+Patient Name: dd
+Age: 21
+Urgency: 2
+Specialty: 2
+Ward: 1
+Days: 1
+Bed: 2
+Bill: 6000.00
+-------------------------

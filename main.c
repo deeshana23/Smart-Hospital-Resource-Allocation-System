@@ -48,6 +48,8 @@ int patientCount = 0;
 
 void saveBedStatus();
 
+void savePatientRecord(int index);
+
 void getPatientInput(int index)
 {
     printf("\nEnter patient name: ");
@@ -319,6 +321,8 @@ void registerPatient()
 
     printReceipt(index);
 
+    savePatientRecord(index);
+
     specialtyQueueCount[patientSpecialty[index] - 1]++;
 
     patientCount++;
@@ -529,11 +533,38 @@ void loadBedStatus()
     fclose(file);
 }
 
+ void savePatientRecord(int index)
+{
+    FILE *file;
+
+    file = fopen("patient_records.txt", "a");
+
+    if (file == NULL)
+    {
+        printf("Unable to save patient record.\n");
+        return;
+    }
+
+    fprintf(file, "Patient ID: %d\n", patientID[index]);
+    fprintf(file, "Patient Name: %s\n", patientName[index]);
+    fprintf(file, "Age: %d\n", patientAge[index]);
+    fprintf(file, "Urgency: %d\n", patientUrgency[index]);
+    fprintf(file, "Specialty: %d\n", patientSpecialty[index]);
+    fprintf(file, "Ward: %d\n", patientWard[index]);
+    fprintf(file, "Days: %d\n", patientDays[index]);
+    fprintf(file, "Bed: %d\n", patientBed[index]);
+    fprintf(file, "Bill: %.2f\n", patientBill[index]);
+    fprintf(file, "-------------------------\n");
+
+    fclose(file);
+}
+
 int main()
 {
     int choice;
     printf("Smart Hospital Resource Allocation System\n");
     loadBedStatus();
+
 
      while (1)
     {
