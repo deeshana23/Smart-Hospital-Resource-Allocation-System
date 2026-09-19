@@ -31,6 +31,7 @@ const int wardCapacities[WARD_COUNT] = { 20, 10, 10, 5};
 int bedOccupancy[WARD_COUNT][20] = {0};
 
 int specialtyQueueCount[SPECIALTY_COUNT] = {0};
+int specialtyPatientCount[SPECIALTY_COUNT] = {0};
 
 #define MAX_PATIENTS 100
 
@@ -340,6 +341,12 @@ void registerPatient()
 
     getPatientInput(index);
 
+    if (specialtyPatientCount[patientSpecialty[index] - 1] >= specialtyDailyCaps[patientSpecialty[index] - 1])
+{
+    printf("Daily limit reached for this specialty.\n");
+    return;
+}
+
     assignBed(index);
 
     saveBedStatus();
@@ -351,6 +358,8 @@ void registerPatient()
     savePatientRecord(index);
 
     specialtyQueueCount[patientSpecialty[index] - 1]++;
+
+    specialtyPatientCount[patientSpecialty[index] - 1]++;
 
     patientCount++;
 }
