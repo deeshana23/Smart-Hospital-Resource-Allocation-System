@@ -46,6 +46,8 @@ double patientBill[MAX_PATIENTS];
 
 int patientCount = 0;
 
+void saveBedStatus();
+
 void getPatientInput(int index)
 {
     printf("\nEnter patient name: ");
@@ -171,6 +173,8 @@ void assignBed(int index)
     patientWard[index] = 0;
     patientDays[index] = 0;
 }
+
+
 
 int calculateWaitingTime(int index)
 {
@@ -308,6 +312,8 @@ void registerPatient()
     getPatientInput(index);
 
     assignBed(index);
+
+    saveBedStatus();
 
     patientBill[index] = calculateBill(index);
 
@@ -468,6 +474,35 @@ void showHighestPayingPatient()
     printf("\n===== HIGHEST PAYING PATIENT =====\n");
     printf("Patient Name : %s\n", patientName[highestIndex]);
     printf("Patient Bill : Rs. %.2f\n", patientBill[highestIndex]);
+}
+
+void saveBedStatus()
+{
+    FILE *file;
+    int ward;
+    int bed;
+
+    file = fopen("beds_status.txt", "w");
+
+    if (file == NULL)
+    {
+        printf("Unable to save bed status.\n");
+        return;
+    }
+
+    for (ward = 0; ward < WARD_COUNT; ward++)
+    {
+        for (bed = 0; bed < wardCapacities[ward]; bed++)
+        {
+            fprintf(file, "%d ", bedOccupancy[ward][bed]);
+        }
+
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+
+    printf("Bed status saved successfully.\n");
 }
 
 int main()
