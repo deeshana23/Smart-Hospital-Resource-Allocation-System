@@ -505,10 +505,35 @@ void saveBedStatus()
     printf("Bed status saved successfully.\n");
 }
 
+void loadBedStatus()
+{
+    FILE *file;
+    int ward;
+    int bed;
+
+    file = fopen("beds_status.txt", "r");
+
+    if (file == NULL)
+    {
+        return;
+    }
+
+    for (ward = 0; ward < WARD_COUNT; ward++)
+    {
+        for (bed = 0; bed < wardCapacities[ward]; bed++)
+        {
+            fscanf(file, "%d", &bedOccupancy[ward][bed]);
+        }
+    }
+
+    fclose(file);
+}
+
 int main()
 {
     int choice;
     printf("Smart Hospital Resource Allocation System\n");
+    loadBedStatus();
 
      while (1)
     {
